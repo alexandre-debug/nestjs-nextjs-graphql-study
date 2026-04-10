@@ -1,0 +1,25 @@
+# Docker Compose para ambiente de desenvolvimento
+# Sobe o PostgreSQL necessário para o backend NestJS
+
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: nestjs-nextjs-graphql-study_study_db
+    environment:
+      POSTGRES_USER: nestjs-nextjs-graphql-study
+      POSTGRES_PASSWORD: nestjs-nextjs-graphql-study123
+      POSTGRES_DB: nestjs-nextjs-graphql-study_study
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nestjs-nextjs-graphql-study"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
